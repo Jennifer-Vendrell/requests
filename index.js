@@ -1,6 +1,6 @@
 const express = require('express') //importando el modulo express
-
 const app = express()
+app.use(express.json());
 
 //http://localhost:3000/
 app.get('/', (req, res) => {
@@ -33,14 +33,29 @@ app.get('/login',(req, res)=> {
     return
 })
 
-//http://localhost:3000/
-app.get('/', (req, res) => { //Endpoint
-    res.send("Hello with GET!")
+
+
+
+app.post('/login', (req, res) => {//Endpoint
+    const {user, password} = req.body    
+    if(!user || !password){
+        res.status(400).json({msg: 'you need to provide <user> and <password> parameters'})
+    return
+    }
+
+    if (user === 'jenni' && password === '1234'){
+        res.json({msg: 'you sign in succesfully'})
+        return
+    }
+
+    res.status(404).json({
+        msg:'Error en el usuario o contraseña'
+    })
 })
 
 //http://localhost:3000/
-app.post('/', (req, res) => {
-    res.send("Hello with POST!")
+app.put('/', (req, res) => {
+    res.json({msg: 'HELLO PUT'})
 })
 
 //http://localhost:3000/
